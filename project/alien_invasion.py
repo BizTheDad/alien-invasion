@@ -11,12 +11,12 @@ def run_game():
     screen = pygame.display.set_mode((settings.screen_width, settings.screen_height))
     pygame.display.set_caption("Alien Invasion")
 
-    ship = Ship(screen)
+    ship = Ship(settings, screen)
 
     while True:
 
-        gf.check_events()
-
+        gf.check_events(ship)
+        ship.update()
         gf.update_screen(settings, screen, ship)
 
 run_game()
