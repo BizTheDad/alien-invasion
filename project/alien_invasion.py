@@ -3,8 +3,8 @@ from pygame.sprite import Group
 
 from settings import Settings
 from ship import Ship
-from alien import Alien
 import game_functions as gf
+from game_stats import GameStats
 
 
 def run_game():
@@ -19,13 +19,16 @@ def run_game():
     aliens = Group()
     gf.create_fleet(settings, screen, ship, aliens)
 
+    stats = GameStats(settings)
+
     while True:
 
         gf.check_events(settings, screen, ship, bullets)
-        ship.update()
 
-        gf.update_bullets(aliens, bullets)
-        gf.update_aliens(settings, aliens)
+        if stats.game_active:
+            ship.update()
+            gf.update_bullets(aliens, bullets)
+            gf.update_aliens(settings, stats, screen, ship, aliens, bullets)
 
         gf.update_screen(settings, screen, ship, aliens, bullets)
 
